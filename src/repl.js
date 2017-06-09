@@ -1,14 +1,43 @@
-const fork = require('child_process').fork;
-const exec = require('child_process').exec;
+const path = require('path')
+const exec = require('child_process').exec
+const getReplPath = require('./getReplPath')
+const getAppRoot = require('./getAppRoot')
 
-export default function createREPL() {
-  const proc = exec('./node_modules/.bin/babel-node');
+function getBabelNodeExecutablePath() {
+  return path.resolve(
+    path.join(
+      getAppRoot(),
+      'node_modules',
+      '.bin',
+      'babel-node'
+    )
+  )
+}
 
-  process.stdin.resume();
-  process.stdin.setEncoding('utf8');
+module.exports = function createREPL ({presets = [], plugins = []} = {}) {
+  let proc = null;
 
-  process.stdin.pipe(proc.stdin);
-  proc.stdout.pipe(process.stdout);
+  const executablePath = getBabelNodeExecutablePath()
+  const presetFlag = presets.length > 0 ? `--presets=${presets.join(',')}` : ''
+  const pluginFlag = plugins.length > 0 ? `--plugins=${plugins.join(',')}` : ''
+  const command = `${executablePath} ${presetFlag} ${pluginFlag}`
 
-  return proc;
+  function start () {
+    proc = exec(
+      command,
+      {cwd: getReplPath()}
+    );
+
+    process.stdin.resume();
+    process.stdin.setEncoding('utf8');
+
+    process.stdin.pipe(proc.stdin);
+    proc.stdout.pipe(process.stdout);
+  }
+
+  function stop () {
+    // @TODO
+  }
+
+  return {start, stop};
 }
