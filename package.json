@@ -1,0 +1,23 @@
+{
+  "name": "es-repl",
+  "version": "0.1.0",
+  "description": "A configurable ES6+ Node REPL",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ajwhite/es-repl.git"
+  },
+  "keywords": [
+    "ES6",
+    "REPL"
+  ],
+  "author": "Atticus White <contact@atticuswhite.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ajwhite/es-repl/issues"
+  },
+  "homepage": "https://github.com/ajwhite/es-repl#readme"
+}
