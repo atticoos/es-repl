@@ -1,10 +1,11 @@
+const fs = require('fs')
 const path = require('path')
 const npm = require('npm-programmatic')
-const getAppRoot = require('./getAppRoot')
+const getReplPath = require('./getReplPath')
 
 module.exports = function installPackages (packages) {
   return npm.install(packages, {
-    cwd: getAppRoot(),
+    cwd: getReplPath(),
     output: true,
     save: false,
     noSave: true
